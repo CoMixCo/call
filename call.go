@@ -7,21 +7,21 @@ import (
 
 type Handle func() any
 
-type callMap struct {
+type CallMap struct {
 	m map[string]Handle
 }
 
-func NewCall() callMap {
-	return callMap{
+func NewCall() CallMap {
+	return CallMap{
 		m: map[string]Handle{},
 	}
 }
 
-func (c *callMap) Register(register_name string, func_new Handle) {
+func (c *CallMap) Register(register_name string, func_new Handle) {
 	c.m[register_name] = func_new
 }
 
-func (c *callMap) Invok(register_name string, method_name string, params ...interface{}) ([]reflect.Value, error) {
+func (c *CallMap) Invok(register_name string, method_name string, params ...interface{}) ([]reflect.Value, error) {
 	bind_handle, ok := c.m[register_name]
 	if !ok {
 		return []reflect.Value{}, errors.New("handle is not registed")
